@@ -1,61 +1,72 @@
 <html>
-	<head>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.5.4/pixi.min.js"></script>
-	</head>
-	<body>
-	</body>
-	<script>
-		PIXI.loader
-		  .add([
-			"hamster.png"
-		  ])
-		  .on("progress", loadProgressHandler)
-		  .load(setup);
-		  
-		function setup(){
-			var app = new PIXI.Application(800, 600, {backgroundColor : 0x1099bb});
-			document.body.appendChild(app.view);
-			
-			var texture = PIXI.utils.TextureCache["hamster.png"];
-			getRectangle(115,384,0,6,texture)
-			var hamster = new PIXI.Sprite(texture);
-			
-			// center the sprite's anchor point
-			hamster.anchor.set(0.5);
 
-			// move the sprite to the center of the screen
-			hamster.x = app.renderer.width / 2;
-			hamster.y = app.renderer.height / 2;
-			var counter = 0;
-			app.stage.addChild(hamster);
-			app.ticker.add(function(delta) {
-				counter = counter+1;
-				getRectangle(115,384,counter%6,6,texture)
-				var hamster = new PIXI.Sprite(texture);
-			});
-		}
-		
-		function loadProgressHandler(loader, resource) {
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.5.4/pixi.min.js"></script>
+  <style>
+    * {
+      padding: 0;
+      margin: 0
+    }
+  </style>
+</head>
 
-		  //Display the file `url` currently being loaded
-		  console.log("loading: " + resource.url); 
+<body>
+</body>
+<script>
+  PIXI.loader
+    .add([
+      "hamster.png"
+    ])
+    .on("progress", loadProgressHandler)
+    .load(setup);
 
-		  //Display the precentage of files currently loaded
-		  console.log("progress: " + loader.progress + "%"); 
+  function setup() {
+    var app = new PIXI.Application(800, 600, { backgroundColor: 0x1099bb });
+    document.body.appendChild(app.view);
 
-		  //If you gave your files names as the first argument 
-		  //of the `add` method, you can access them like this
-		  //console.log("loading: " + resource.name);
-		}
-		
-		
-		
-		
-		function getRectangle(height, length, frame, maxframes, texture){
-			var framelength = length/maxframes;
-			var rectangle = new PIXI.Rectangle(framelength*frame, 0, framelength, height);
-			texture.frame = rectangle;
-		}
+    app.renderer.view.style.position = "absolute";
+    app.renderer.view.style.display = "block";
+    app.renderer.autoResize = true;
+    app.renderer.resize(window.innerWidth, window.innerHeight);
 
-	</script>
+    var texture = PIXI.utils.TextureCache["hamster.png"];
+    getRectangle(115, 384, 0, 6, texture)
+    var hamster = new PIXI.Sprite(texture);
+
+    // center the sprite's anchor point
+    hamster.anchor.set(0.5);
+
+    // move the sprite to the center of the screen
+    hamster.x = app.renderer.width / 2;
+    hamster.y = app.renderer.height / 2;
+    var counter = 0;
+    app.stage.addChild(hamster);
+    app.ticker.add(function (delta) {
+      counter = counter + 1;
+      getRectangle(115, 384, counter % 6, 6, texture)
+      var hamster = new PIXI.Sprite(texture);
+    });
+  }
+
+  function loadProgressHandler(loader, resource) {
+
+    //Display the file `url` currently being loaded
+    console.log("loading: " + resource.url);
+
+    //Display the precentage of files currently loaded
+    console.log("progress: " + loader.progress + "%");
+
+    //If you gave your files names as the first argument 
+    //of the `add` method, you can access them like this
+    //console.log("loading: " + resource.name);
+  }
+
+  function getRectangle(height, length, frame, maxframes, texture) {
+    var framelength = length / maxframes;
+    var rectangle = new PIXI.Rectangle(framelength * frame, 0, framelength, height);
+    texture.frame = rectangle;
+  }
+
+</script>
+
 </html>
