@@ -4,13 +4,15 @@ require(['lib/pixi'], function (PIXI, demo) {
     hamster,
     jump = false,
     jumpcounter = 0,
-	background;
+	background,
+	spawn=600,
+	boxes=[];
 
   var app = new PIXI.Application(800, 600, { backgroundColor: 0x1099bb });
   app.renderer.view.style.position = "absolute";
   app.renderer.view.style.display = "block";
-  app.renderer.autoResize = true;
-  app.renderer.resize(window.innerWidth, window.innerHeight);
+  //app.renderer.autoResize = true;
+  //app.renderer.resize(window.innerWidth, window.innerHeight);
   document.body.appendChild(app.view);
   app.stage.interactive = true;
   app.stage.on('pointerdown', onClick);
@@ -18,7 +20,8 @@ require(['lib/pixi'], function (PIXI, demo) {
   PIXI.loader
     .add([
       "hamster.png",
-	  "background.png"
+	  "background.png",
+	  "box.png"
     ])
     .on("progress", loadProgressHandler)
     .load(setup);
@@ -44,8 +47,10 @@ require(['lib/pixi'], function (PIXI, demo) {
   }
 
   function onClick() {
-    jump = true;
-    jumpcounter = 0;
+	if(hamster.y == app.renderer.height / 1.5 && !jump){
+		jump = true;
+	}
+    
   }
 
   function getRectangle(height, length, frame, maxframes, texture) {
@@ -70,10 +75,20 @@ require(['lib/pixi'], function (PIXI, demo) {
     }
     if (jumpcounter > 60) {
       jump = false;
+	  jumpcounter = 0;
     }
 	
-	background.width = window.innerWidth ;
-	background.height = window.innerHeight;
+	if(counter%spawn==0){
+		//spawn new box
+		boxes[boxes.length] = new PIXI.Sprite(PIXI.utils.TextureCache["box.png"]); 
+		app.stage.addChild(boxes[boxes.length-1]);
+	}
+	//move boxes
+	
+	//remove old boxes
+	
+	//background.width = window.innerWidth ;
+	//background.height = window.innerHeight;
     //Render the stage
     app.renderer.render(app.stage);
   }
