@@ -1,0 +1,28 @@
+{
+  "name": "hamsterjump",
+  "version": "1.0.0",
+  "description": "hamsterjump",
+  "main": "server/server.js",
+  "dependencies": {
+    "babel-core": "^6.25.0",
+    "express": "^4.15.3",
+    "pixi.js": "^4.5.4",
+    "rollup": "^0.45.2",
+    "rollup-plugin-babel": "^2.7.1",
+    "socket.io": "^2.0.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/motivationsbanner/hamsterjump.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/motivationsbanner/hamsterjump/issues"
+  },
+  "homepage": "https://github.com/motivationsbanner/hamsterjump#readme"
+}
