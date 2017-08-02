@@ -4,5 +4,5 @@ Play a Hamster that has to run as far as possible and try to beat the highscores
 Compile JS:
 `node rollup`  
 
-Run Server
+Run Server:
 `npm start`
