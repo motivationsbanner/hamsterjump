@@ -3,7 +3,8 @@ require(['lib/pixi'], function (PIXI, demo) {
     texture,
     hamster,
     jump = false,
-    jumpcounter = 0;
+    jumpcounter = 0,
+	background;
 
   var app = new PIXI.Application(800, 600, { backgroundColor: 0x1099bb });
   app.renderer.view.style.position = "absolute";
@@ -16,13 +17,14 @@ require(['lib/pixi'], function (PIXI, demo) {
 
   PIXI.loader
     .add([
-      "hamster.png"
+      "hamster.png",
+	  "background.png"
     ])
     .on("progress", loadProgressHandler)
     .load(setup);
 
   function setup() {
-
+	background = new PIXI.Sprite(PIXI.utils.TextureCache["background.png"]);
     texture = PIXI.utils.TextureCache["hamster.png"];
     getRectangle(115, 384, 0, 6, texture)
     hamster = new PIXI.Sprite(texture);
@@ -31,7 +33,7 @@ require(['lib/pixi'], function (PIXI, demo) {
     hamster.anchor.set(0.5);
     hamster.x = 34;
     hamster.y = app.renderer.height / 1.5;
-
+	app.stage.addChild(background);
     app.stage.addChild(hamster);
     gameLoop();
   }
@@ -69,6 +71,9 @@ require(['lib/pixi'], function (PIXI, demo) {
     if (jumpcounter > 60) {
       jump = false;
     }
+	
+	background.width = window.innerWidth ;
+	background.height = window.innerHeight;
     //Render the stage
     app.renderer.render(app.stage);
   }
