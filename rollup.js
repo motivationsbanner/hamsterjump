@@ -3,7 +3,7 @@ var babel = require("rollup-plugin-babel");
 
 rollup.rollup({
   entry: "client/main.js",
-  plugins: [ babel() ]
+  plugins: [babel()]
 }).then(function (bundle) {
   bundle.write({
     dest: "client/dist/bundle.js",
