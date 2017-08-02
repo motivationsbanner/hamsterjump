@@ -1,6 +1,7 @@
 {
-  // https://github.com/rollup/rollup-plugin-babel/issues/72
   "presets": [
-    ["es2015", { "modules": false }]
+    [
+      "es2015-rollup"
+    ]
   ]
 }
