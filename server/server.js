@@ -1,5 +1,3 @@
-"use strict";
-
 const fs = require("fs"),
   EventEmitter = require("events").EventEmitter,
   startServer = new EventEmitter();
@@ -18,6 +16,14 @@ server.listen(port, function () {
   console.log("listening on *: " + port);
 });
 
+const dbAccess = require(__dirname + "/databaseAccess");
+
 io.sockets.on("connection", client => {
   // do socket.io stuff
+  const uid = "123FF-FFAsdasd";
+  const name = "tim";
+
+  dbAccess(uid, name);  
 });
+
+

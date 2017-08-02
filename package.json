@@ -10,7 +10,8 @@
     "pixi.js": "^4.5.4",
     "rollup": "^0.45.2",
     "rollup-plugin-babel": "^2.7.1",
-    "socket.io": "^2.0.3"
+    "socket.io": "^2.0.3",
+    "sqlite3": "^3.1.8"
   },
   "devDependencies": {},
   "scripts": {
