@@ -1,4 +1,7 @@
-define(["pixi"], function (PIXI) {
+define(["pixi", "connection"], function (PIXI, connection) {
+  // init connection
+  connection.init();
+
   var counter = 0,
     jump = false,
     jumpcounter = 0,

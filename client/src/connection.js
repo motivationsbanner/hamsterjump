@@ -1,6 +1,7 @@
 define(["socketio"], function (io) {
   socket = io();
   var authentication = "hamsterjumpAuthentication";
+  
   function saveAuthentication(uniqueId) {
     localStorage.setItem(authentication, uniqueId);
   }

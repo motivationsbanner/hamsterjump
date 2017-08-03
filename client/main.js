@@ -7,10 +7,6 @@ require.config({
   }
 });
 
-require(["connection"], function(connection) {
-  connection.init();
-})
-
 require(["someonenamethispls"], function(someonenamethispls) {
   someonenamethispls.init();
 })
