@@ -16,14 +16,28 @@ server.listen(port, function () {
   console.log("listening on *: " + port);
 });
 
+// get dbaccess instance
 const dbAccess = require(__dirname + "/databaseAccess");
+
+// tests
+dbAccess.insertUser("123FF1-FFAsdasd", "somename");
+dbAccess.insertScore("123FF1-FFAsdasd", 123); // should work
+dbAccess.insertScore("123FF1-FFAsdasd1", 123); // should failt
 
 io.sockets.on("connection", client => {
   // do socket.io stuff
-  const uid = "123FF-FFAsdasd";
-  const name = "tim";
+  
+  client.on("authenticate", data => {
+    var uniqueId = data.uniqueId;
+    if (uniqueId) {
+      // check if user already exists
+      uniqueId = "124";
+    } else {
+      // create new uniqueId and insert user
+      uniqueId = "123";
+    }
 
-  dbAccess(uid, name);  
+    client.emit("authenticate", { uniqueId: uniqueId });
+  });
+
 });
-
-

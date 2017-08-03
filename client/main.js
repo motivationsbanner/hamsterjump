@@ -1,60 +1,87 @@
-require(['lib/pixi'], function (PIXI, demo) {
+require.config({
+  paths: {
+    pixi: "lib/pixi",
+    socketio: "https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io"
+  }
+});
+
+require(["socketio"], function(io) {
+  socket = io();
+  var authentication = "hamsterjumpAuthentication";
+
+  // => some ideas for identification of the user
+  socket.on("authenticate", function(data) {
+    saveAuthentication(data.uniqueId);
+  });
+
+  function saveAuthentication(uniqueId) {
+    localStorage.setItem(authentication, uniqueId);
+  }
+  
+  function removeAuthentication() {
+    localStorage.removeItem(authentication);
+  }
+
+  var id = localStorage.getItem(authentication);
+  socket.emit("authenticate", { uniqueId: id });
+
+  window.addEventListener("beforeunload", function() {
+    socket.disconnect();
+  })
+})
+
+require(['pixi'], function (PIXI) {
   var counter = 0,
-    texture,
-    hamster,
     jump = false,
     jumpcounter = 0,
-	background,
-	spawn=240,
-	boxes=[],
-	jumpmax = 40,
-	groundlevel;
+    spawn = 240,
+    boxes = [],
+    jumpmax = 40,
+    background,
+    groundlevel,
+    texture,
+    hamster;
 
   var app = new PIXI.Application(800, 600, { backgroundColor: 0x1099bb });
   app.renderer.view.style.position = "absolute";
   app.renderer.view.style.display = "block";
-  //app.renderer.autoResize = true;
-  //app.renderer.resize(window.innerWidth, window.innerHeight);
   document.body.appendChild(app.view);
   app.stage.interactive = true;
   app.stage.on('pointerdown', onClick);
 
   PIXI.loader
     .add([
-      "hamster.png",
-	  "background.png",
-	  "box.png"
+      "images/hamster.png",
+      "images/background.png",
+      "images/box.png"
     ])
     .on("progress", loadProgressHandler)
     .load(setup);
 
   function setup() {
-	background = new PIXI.Sprite(PIXI.utils.TextureCache["background.png"]);
-    texture = PIXI.utils.TextureCache["hamster.png"];
+    background = new PIXI.Sprite(PIXI.utils.TextureCache["images/background.png"]);
+    texture = PIXI.utils.TextureCache["images/hamster.png"];
     getRectangle(115, 384, 0, 6, texture)
     hamster = new PIXI.Sprite(texture);
 
     // center the sprite's anchor point
-	groundlevel = 430;
+    groundlevel = 430;
     hamster.x = 0;
-    hamster.y = groundlevel-115;
-	app.stage.addChild(background);
+    hamster.y = groundlevel - 115;
+    app.stage.addChild(background);
     app.stage.addChild(hamster);
     gameLoop();
   }
 
   function loadProgressHandler(loader, resource) {
-    console.log("loading: " + resource.url);
-    console.log("progress: " + loader.progress + "%");
+    // this does nothing atm => loading screen? kek
   }
 
   function onClick() {
-	if(hamster.y == groundlevel-115&& !jump){
-		jump = true;
-	}
-    
+    if (hamster.y == groundlevel - 115 && !jump) {
+      jump = true;
+    }
   }
-
   function getRectangle(height, length, frame, maxframes, texture) {
     var framelength = length / maxframes;
     var rectangle = new PIXI.Rectangle(framelength * frame, 0, framelength, height);
@@ -68,7 +95,7 @@ require(['lib/pixi'], function (PIXI, demo) {
 
     counter = counter + 1;
     getRectangle(115, 384, counter % 6, 6, texture)
-    if (hamster.y < groundlevel-115 && !jump) {
+    if (hamster.y < groundlevel - 115 && !jump) {
       hamster.y = hamster.y + 2;
     }
     if (jump) {
@@ -77,86 +104,81 @@ require(['lib/pixi'], function (PIXI, demo) {
     }
     if (jumpcounter > jumpmax) {
       jump = false;
-	  jumpcounter = 0;
+      jumpcounter = 0;
     }
-	
-	if(counter%spawn==0){
-		//spawn new box
-		boxes[boxes.length] = new PIXI.Sprite(PIXI.utils.TextureCache["box.png"]);
-		boxes[boxes.length-1].x = 800;
-		boxes[boxes.length-1].y = groundlevel-20;
-		app.stage.addChild(boxes[boxes.length-1]);
-	}
-	//move boxes
-	for (var i = 0; i < boxes.length; ++i) {
-		boxes[i].x = boxes[i].x-2;
-		//remove old boxes
-		if(boxes[i].x < -50){
-			boxes.splice(i, 1);
-			console.log("removed box");
-		}
-		//test collision detection
-		if(hitTestRectangle(hamster, boxes[i])){
-			console.log("colided with box");
-		}
-	}
-	
-	
-	
-	//background.width = window.innerWidth ;
-	//background.height = window.innerHeight;
+
+    if (counter % spawn == 0) {
+      //spawn new box
+      boxes[boxes.length] = new PIXI.Sprite(PIXI.utils.TextureCache["images/box.png"]);
+      boxes[boxes.length - 1].x = 800;
+      boxes[boxes.length - 1].y = groundlevel - 20;
+      app.stage.addChild(boxes[boxes.length - 1]);
+    }
+    //move boxes
+    for (var i = 0; i < boxes.length; ++i) {
+      boxes[i].x = boxes[i].x - 2;
+      //remove old boxes
+      if (boxes[i].x < -50) {
+        boxes.splice(i, 1);
+      }
+      //test collision detection
+      if (hitTestRectangle(hamster, boxes[i])) {
+        // collided with box
+      }
+    }
+
     //Render the stage
     app.renderer.render(app.stage);
   }
-  
-	  function hitTestRectangle(r1, r2) {
 
-	  //Define the variables we'll need to calculate
-	  var hit, combinedHalfWidths, combinedHalfHeights, vx, vy;
+  function hitTestRectangle(r1, r2) {
 
-	  //hit will determine whether there's a collision
-	  hit = false;
+    //Define the variables we'll need to calculate
+    var hit, combinedHalfWidths, combinedHalfHeights, vx, vy;
 
-	  //Find the center points of each sprite
-	  r1.centerX = r1.x + r1.width / 2;
-	  r1.centerY = r1.y + r1.height / 2;
-	  r2.centerX = r2.x + r2.width / 2;
-	  r2.centerY = r2.y + r2.height / 2;
+    //hit will determine whether there's a collision
+    hit = false;
 
-	  //Find the half-widths and half-heights of each sprite
-	  r1.halfWidth = r1.width / 2;
-	  r1.halfHeight = r1.height / 2;
-	  r2.halfWidth = r2.width / 2;
-	  r2.halfHeight = r2.height / 2;
+    //Find the center points of each sprite
+    r1.centerX = r1.x + r1.width / 2;
+    r1.centerY = r1.y + r1.height / 2;
+    r2.centerX = r2.x + r2.width / 2;
+    r2.centerY = r2.y + r2.height / 2;
 
-	  //Calculate the distance vector between the sprites
-	  vx = r1.centerX - r2.centerX;
-	  vy = r1.centerY - r2.centerY;
+    //Find the half-widths and half-heights of each sprite
+    r1.halfWidth = r1.width / 2;
+    r1.halfHeight = r1.height / 2;
+    r2.halfWidth = r2.width / 2;
+    r2.halfHeight = r2.height / 2;
 
-	  //Figure out the combined half-widths and half-heights
-	  combinedHalfWidths = r1.halfWidth + r2.halfWidth;
-	  combinedHalfHeights = r1.halfHeight + r2.halfHeight;
+    //Calculate the distance vector between the sprites
+    vx = r1.centerX - r2.centerX;
+    vy = r1.centerY - r2.centerY;
 
-	  //Check for a collision on the x axis
-	  if (Math.abs(vx) < combinedHalfWidths) {
+    //Figure out the combined half-widths and half-heights
+    combinedHalfWidths = r1.halfWidth + r2.halfWidth;
+    combinedHalfHeights = r1.halfHeight + r2.halfHeight;
 
-		//A collision might be occuring. Check for a collision on the y axis
-		if (Math.abs(vy) < combinedHalfHeights) {
+    //Check for a collision on the x axis
+    if (Math.abs(vx) < combinedHalfWidths) {
 
-		  //There's definitely a collision happening
-		  hit = true;
-		} else {
+      //A collision might be occuring. Check for a collision on the y axis
+      if (Math.abs(vy) < combinedHalfHeights) {
 
-		  //There's no collision on the y axis
-		  hit = false;
-		}
-	  } else {
+        //There's definitely a collision happening
+        hit = true;
+      } else {
 
-		//There's no collision on the x axis
-		hit = false;
-	  }
+        //There's no collision on the y axis
+        hit = false;
+      }
+    } else {
 
-	  //`hit` will be either `true` or `false`
-	  return hit;
-	};
+      //There's no collision on the x axis
+      hit = false;
+    }
+
+    //`hit` will be either `true` or `false`
+    return hit;
+  };
 });
