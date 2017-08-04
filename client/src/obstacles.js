@@ -35,6 +35,14 @@ define(["constants", "pixi", "hitTest"], function (constants, pixi, hitTest) {
       return hitTest.rectangle(box, sprite);
     });
   };
+	
+	Obstacles.prototype.remove = function (app) {
+		//remove boxes
+		this.boxes.forEach(function (box) {
+			app.stage.removeChild(box);
+    });
+		this.boxes = [];
+	};
 
   return Obstacles;
 });
