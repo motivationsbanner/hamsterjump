@@ -17,12 +17,17 @@ server.listen(port, function () {
 });
 
 // get dbaccess instance
-const dbAccess = require(__dirname + "/databaseAccess");
-
+const dbAccess = require(__dirname + "/src/databaseAccess");
+const constants = require(__dirname + "/src/constants")
 // tests
-dbAccess.insertUser("123FF1-FFAsdasd", "somename");
+var test = dbAccess.insertUser("123FF1-FFAsdasd", "somename");
 dbAccess.insertScore("123FF1-FFAsdasd", 123); // should work
 dbAccess.insertScore("123FF1-FFAsdasd1", 123); // should failt
+
+dbAccess.getHighscore(constants.HIGHSCORE_AMOUNT, (highscore) => {
+  // console.log(highscore);
+  // do something with it:)
+});
 
 io.sockets.on("connection", client => {
   // do socket.io stuff
