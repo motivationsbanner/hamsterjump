@@ -1,9 +1,10 @@
-define(["pixi", "connection", "constants", "player", "obstacles"],
-  function (pixi, connection, constants, Player, Obstacles) {
+define(["pixi", "connection", "constants", "player", "obstacles", "score"],
+  function (pixi, connection, constants, Player, Obstacles, Score) {
     var app,
       ticks = 0,
       player,
-      obstacles;
+      obstacles,
+	  score;
 
     function init() {
       // init connection
@@ -28,10 +29,11 @@ define(["pixi", "connection", "constants", "player", "obstacles"],
           var background = new pixi.Sprite(pixi.utils.TextureCache["images/background.png"]);
           player = new Player();
           obstacles = new Obstacles(app);
+		  score = new Score();
 
           app.stage.addChild(background);
           app.stage.addChild(player.sprite);
-
+		  app.stage.addChild(score.text);
           app.stage.on("pointerdown", function () {
             player.jump();
           });
@@ -49,7 +51,8 @@ define(["pixi", "connection", "constants", "player", "obstacles"],
 
       player.tick(ticks);
       obstacles.tick(ticks);
-
+	  score.tick(ticks);
+	  
       if (obstacles.collide(player.sprite)) {
         console.log("collision");
       }
