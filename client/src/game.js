@@ -1,14 +1,14 @@
 define(["pixi", "connection", "constants", "player", "obstacles"],
   function (pixi, connection, constants, Player, Obstacles) {
-    // init connection
-    connection.init();
-
     var app,
       ticks = 0,
       player,
       obstacles;
 
     function init() {
+      // init connection
+      connection.init();
+
       // create and configure application
       app = new pixi.Application(constants.GAME_WIDTH, constants.game_HEIGHT, { backgroundColor: 0x1099bb });
       app.renderer.view.style.position = "absolute";
@@ -45,7 +45,7 @@ define(["pixi", "connection", "constants", "player", "obstacles"],
       // loop this function 60 times per second
       requestAnimationFrame(gameLoop);
 
-      ticks = ticks + 1;
+      ticks += 1;
 
       player.tick(ticks);
       obstacles.tick(ticks);
