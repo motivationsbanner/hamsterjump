@@ -16,6 +16,11 @@ server.listen(port, function () {
   console.log("listening on *: " + port);
 });
 
+// livereload
+const livereload = require('livereload');
+const livereloadServer = livereload.createServer();
+livereloadServer.watch("client");
+
 // get dbaccess instance
 const dbAccess = require(__dirname + "/src/databaseAccess");
 const constants = require(__dirname + "/src/constants")

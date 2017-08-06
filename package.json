@@ -5,6 +5,7 @@
   "main": "server/server.js",
   "dependencies": {
     "express": "^4.15.3",
+    "livereload": "^0.6.2",
     "socket.io": "^2.0.3",
     "sqlite3": "^3.1.8"
   },
