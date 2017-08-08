@@ -37,7 +37,7 @@ define(["pixi", "connection", "constants", "player", "obstacles", "score"],
         ])
         .load(function () {
 
-          var background = new pixi.Sprite(pixi.Texture.fromImage("images/background.png"));
+          var background = new pixi.Sprite(pixi.loader.resources["images/background.png"].texture);
           player = new Player();
           obstacles = new Obstacles(app);
           score = new Score();

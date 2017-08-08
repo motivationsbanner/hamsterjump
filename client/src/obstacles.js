@@ -8,7 +8,7 @@ define(["constants", "pixi", "hitTest"], function (constants, pixi, hitTest) {
   Obstacles.prototype.tick = function (ticks) {
     if (ticks % constants.OBSTACLE_INTERVAL == 0) {
       // spawn new box
-      var box = new pixi.Sprite(pixi.Texture.fromImage("images/box.png"));
+      var box = new pixi.Sprite(pixi.loader.resources["images/box.png"].texture);
 
       box.x = constants.GAME_WIDTH;
       box.y = constants.GROUND_LEVEL - constants.OBSTACLE_HEIGHT;
