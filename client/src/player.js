@@ -1,7 +1,7 @@
 define(["constants", "pixi"], function (constants, pixi) {
   // constructor
   function Player() {
-    this.texture = pixi.utils.TextureCache["images/hamster.png"];
+    this.texture = pixi.Texture.fromImage("images/hamster.png");
     getRectangle(constants.PLAYER_HEIGHT, constants.PLAYER_WIDTH, 0, 6, this.texture);
     this.sprite = new pixi.Sprite(this.texture);
 
