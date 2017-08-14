@@ -6,7 +6,7 @@ const http = require("http"),
   express = require("express");
 
 const app = express();
-app.use(express.static(__dirname + "/../client/"));
+app.use(express.static(__dirname + "/../client/dist"));
 const server = http.createServer(app);
 
 const io = require("socket.io").listen(server);
@@ -15,11 +15,6 @@ const port = 8000;
 server.listen(port, function () {
   console.log("listening on *: " + port);
 });
-
-// livereload
-const livereload = require('livereload');
-const livereloadServer = livereload.createServer();
-livereloadServer.watch("client");
 
 // get dbaccess instance
 const dbAccess = require(__dirname + "/src/databaseAccess");

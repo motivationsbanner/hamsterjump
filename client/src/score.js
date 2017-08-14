@@ -1,16 +1,17 @@
-define(["constants", "pixi", "textstyle"], function (constants, pixi, Textstyle) {
-  // constructor
-  function Score() {
-    this.value = 0;
-    this.style = new Textstyle();
-    this.text = new PIXI.Text('Score: ' + this.value, this.style);
-  }
+import textStyle from './textstyle';
+import constants from './constants';
+import { Text } from 'pixi.js';
 
-  Score.prototype.tick = function (ticks) {
-    this.value = Math.floor(ticks / 30);
-    this.text.text = 'Score: ' + this.value;
-  };
+// constructor
+function Score() {
+  this.value = 0;
+  this.style = textStyle;
+  this.text = new Text('Score: ' + this.value, this.style);
+}
 
+Score.prototype.tick = function (ticks) {
+  this.value = Math.floor(ticks / 30);
+  this.text.text = 'Score: ' + this.value;
+};
 
-  return Score;
-});
+export default Score;

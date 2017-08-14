@@ -4,14 +4,24 @@
   "description": "hamsterjump",
   "main": "server/server.js",
   "dependencies": {
-    "express": "^4.15.3",
-    "livereload": "^0.6.2",
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.1",
+    "babel-preset-env": "^1.6.0",
+    "concurrently": "^3.5.0",
+    "express": "^4.15.4",
+    "pixi.js": "^4.5.4",
+    "serve": "^6.0.6",
     "socket.io": "^2.0.3",
-    "sqlite3": "^3.1.8"
+    "socket.io-client": "^2.0.3",
+    "sqlite3": "^3.1.8",
+    "webpack": "^3.5.4",
+    "webpack-dev-server": "^2.7.1"
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node server/server.js"
+    "start": "node server/server.js",
+    "build": "webpack",
+    "dev": "concurrently --kill-others webpack-dev-server \"npm run start\""
   },
   "repository": {
     "type": "git",

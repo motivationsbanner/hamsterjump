@@ -3,5 +3,8 @@ Play a Hamster that has to run as far as possible and try to beat the highscores
   
 Install Dependencies:
 `npm install`  
+Create: bundle.js:
+`npm run build`  
 Run Server:
-`npm start`
+`npm start`  
+Run Dev Server (port 9000): `npm run dev`
