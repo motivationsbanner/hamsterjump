@@ -20,7 +20,7 @@
   "devDependencies": {},
   "scripts": {
     "start": "node server/server.js",
-    "build": "webpack",
+    "build": "webpack -p",
     "dev": "concurrently --kill-others webpack-dev-server \"npm run start\""
   },
   "repository": {
