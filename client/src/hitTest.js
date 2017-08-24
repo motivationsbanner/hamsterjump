@@ -1,8 +1,8 @@
 // return true when rectangles overlap
 function hitTestRectangle(r1, r2) {
 
-  // define the variables we'll need to calculate
-  var hit, combinedHalfWidths, combinedHalfHeights, vx, vy;
+  // define the letiables we'll need to calculate
+  let hit, combinedHalfWidths, combinedHalfHeights, vx, vy;
 
   // hit will determine whether there's a collision
   hit = false;

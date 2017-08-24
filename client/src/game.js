@@ -5,7 +5,7 @@ import Player from './player';
 import Obstacles from './obstacles';
 import Score from './score';
 
-var app,
+let app,
   ticks = 0,
   player,
   obstacles,
@@ -42,7 +42,7 @@ function init() {
     ])
     .load(function () {
 
-      var background = new Sprite(loader.resources["images/background.png"].texture);
+      let background = new Sprite(loader.resources["images/background.png"].texture);
       player = new Player();
       obstacles = new Obstacles(app);
       score = new Score();

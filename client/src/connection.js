@@ -1,7 +1,7 @@
 import io from 'socket.io-client';
 
-var socket = io("//localhost:8000"); // this should work for now
-var authentication = "hamsterjumpAuthentication";
+let socket = io("//localhost:8000"); // this should work for now
+const authentication = "hamsterjumpAuthentication";
 
 function saveAuthentication(uniqueId) {
   localStorage.setItem(authentication, uniqueId);
@@ -23,7 +23,7 @@ export default {
       saveAuthentication(data.uniqueId);
     });
 
-    var id = getAuthentication();
+    let id = getAuthentication();
     socket.emit("authenticate", { uniqueId: id });
 
     window.addEventListener("beforeunload", function () {
