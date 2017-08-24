@@ -1,0 +1,97 @@
+{
+	"meta": {
+		"image": "spritesheet.png",
+		"size": {"w":1296,"h":1286},
+		"scale": "1"
+	},
+	"frames": {
+		"hamster05.png":
+		{
+			"frame": {"x":800,"y":0,"w":248,"h":348},
+			"rotated": false,
+			"trimmed": true,
+			"spriteSourceSize": {"x":80,"y":40,"w":248,"h":348},
+			"sourceSize": {"w":400,"h":400}
+		},
+		"background.png":
+		{
+			"frame": {"x":0,"y":0,"w":800,"h":600},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":800,"h":600},
+			"sourceSize": {"w":800,"h":600}
+		},
+		"hamster04.png":
+		{
+			"frame": {"x":0,"y":600,"w":248,"h":347},
+			"rotated": false,
+			"trimmed": true,
+			"spriteSourceSize": {"x":80,"y":40,"w":248,"h":347},
+			"sourceSize": {"w":400,"h":400}
+		},
+		"hamster01.png":
+		{
+			"frame": {"x":248,"y":600,"w":248,"h":346},
+			"rotated": false,
+			"trimmed": true,
+			"spriteSourceSize": {"x":80,"y":40,"w":248,"h":346},
+			"sourceSize": {"w":400,"h":400}
+		},
+		"hamster06.png":
+		{
+			"frame": {"x":496,"y":600,"w":248,"h":345},
+			"rotated": false,
+			"trimmed": true,
+			"spriteSourceSize": {"x":80,"y":40,"w":248,"h":345},
+			"sourceSize": {"w":400,"h":400}
+		},
+		"box.png":
+		{
+			"frame": {"x":1048,"y":686,"w":20,"h":20},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":20,"h":20},
+			"sourceSize": {"w":20,"h":20}
+		},
+		"hamster09.png":
+		{
+			"frame": {"x":1048,"y":0,"w":248,"h":344},
+			"rotated": false,
+			"trimmed": true,
+			"spriteSourceSize": {"x":80,"y":40,"w":248,"h":344},
+			"sourceSize": {"w":400,"h":400}
+		},
+		"hamster03.png":
+		{
+			"frame": {"x":1048,"y":344,"w":248,"h":342},
+			"rotated": false,
+			"trimmed": true,
+			"spriteSourceSize": {"x":80,"y":40,"w":248,"h":342},
+			"sourceSize": {"w":400,"h":400}
+		},
+		"hamster07.png":
+		{
+			"frame": {"x":0,"y":947,"w":248,"h":339},
+			"rotated": false,
+			"trimmed": true,
+			"spriteSourceSize": {"x":80,"y":40,"w":248,"h":339},
+			"sourceSize": {"w":400,"h":400}
+		},
+		"hamster08.png":
+		{
+			"frame": {"x":248,"y":947,"w":248,"h":337},
+			"rotated": false,
+			"trimmed": true,
+			"spriteSourceSize": {"x":80,"y":40,"w":248,"h":337},
+			"sourceSize": {"w":400,"h":400}
+		},
+		"hamster02.png":
+		{
+			"frame": {"x":744,"y":600,"w":248,"h":344},
+			"rotated": false,
+			"trimmed": true,
+			"spriteSourceSize": {"x":80,"y":40,"w":248,"h":344},
+			"sourceSize": {"w":400,"h":400}
+		}
+	}
+}

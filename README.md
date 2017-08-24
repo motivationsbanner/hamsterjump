@@ -5,6 +5,8 @@ Install Dependencies:
 `npm install`  
 Create bundle.js:
 `npm run build`  
+Update spritesheet:
+`npm run spritesheet`  
 Run Server:
 `npm start`  
 Run Dev Server (port 9000): `npm run dev`

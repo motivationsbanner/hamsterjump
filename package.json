@@ -13,6 +13,7 @@
     "serve": "^6.0.6",
     "socket.io": "^2.0.3",
     "socket.io-client": "^2.0.3",
+    "spritesheet-js": "^1.2.6",
     "sqlite3": "^3.1.8",
     "webpack": "^3.5.4",
     "webpack-dev-server": "^2.7.1"
@@ -21,7 +22,8 @@
   "scripts": {
     "start": "node server/server.js",
     "build": "webpack -p",
-    "dev": "concurrently --kill-others webpack-dev-server \"npm run start\""
+    "dev": "concurrently --kill-others webpack-dev-server \"npm run start\"",
+    "spritesheet": "spritesheet-js client/images/*.png --path client/dist/"
   },
   "repository": {
     "type": "git",

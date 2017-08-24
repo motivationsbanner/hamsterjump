@@ -1,4 +1,4 @@
-import { Sprite, loader } from 'pixi.js';
+import { Sprite, Texture } from 'pixi.js';
 import constants from './constants';
 import hitTest from './hitTest';
 
@@ -11,7 +11,7 @@ export default class Obstacles {
   tick(ticks) {
     if (ticks % constants.OBSTACLE_INTERVAL == 0) {
       // spawn new box
-      let box = new Sprite(loader.resources["images/box.png"].texture);
+      let box = new Sprite(Texture.fromFrame("box.png"));
 
       box.x = constants.GAME_WIDTH;
       box.y = constants.GROUND_LEVEL - constants.OBSTACLE_HEIGHT;

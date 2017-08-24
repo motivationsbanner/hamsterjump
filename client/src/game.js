@@ -1,4 +1,4 @@
-import { Application, Text, loader, Sprite } from 'pixi.js';
+import { Application, Text, loader, Sprite, Texture } from 'pixi.js';
 import connection from './connection';
 import constants from './constants';
 import Player from './player';
@@ -31,18 +31,17 @@ function init() {
   document.body.appendChild(app.view);
   app.stage.on("pointerdown", function () {
     gamestate = 2;
+    player.startRunning();
   });
 
   // load images
   loader
     .add([
-      "images/hamster.png",
-      "images/background.png",
-      "images/box.png"
+      "spritesheet.json"
     ])
     .load(function () {
 
-      let background = new Sprite(loader.resources["images/background.png"].texture);
+      let background = new Sprite(Texture.fromFrame("background.png"));
       player = new Player();
       obstacles = new Obstacles(app);
       score = new Score();
@@ -52,7 +51,6 @@ function init() {
       app.stage.addChild(background);
       app.stage.addChild(player.sprite);
       app.stage.addChild(score.text);
-
 
       gameLoop();
     });
@@ -71,16 +69,15 @@ function gameLoop() {
     score.tick(ticks);
 
     if (obstacles.collide(player.sprite)) {
-      console.log("collision");
+      player.die();
       gamestate = 1;
       gameover.x = 320;
       gameover.y = 350;
       app.stage.addChild(gameover);
-      app.stage.removeAllListeners("pointerdown", function () {
-        player.jump();
-      });
+      app.stage.removeAllListeners("pointerdown");
       app.stage.on("pointerdown", function () {
         gamestate = 2;
+        player.startRunning();
       });
     }
 
@@ -96,13 +93,10 @@ function gameLoop() {
     ticks = 0;
     gamestate = 0;
     obstacles.remove(app);
-    app.stage.removeAllListeners("pointerdown", function () {
-      gamestate = 2;
-    });
+    app.stage.removeAllListeners("pointerdown");
     app.stage.on("pointerdown", function () {
       player.jump();
     });
-
   }
 }
 

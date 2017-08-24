@@ -1,45 +1,54 @@
-import { loader, Sprite, Rectangle } from 'pixi.js';
+import { extras, Rectangle, Texture } from 'pixi.js';
 import constants from './constants';
 
 export default class Player {
   constructor() {
-    this.texture = loader.resources["images/hamster.png"].texture;
-    this.getRectangle(constants.PLAYER_HEIGHT, constants.PLAYER_WIDTH, 0, 6, this.texture);
-    this.sprite = new Sprite(this.texture);
 
+    // create animatedSprite
+    let frames = [];
+
+    for (let i = 1; i <= 9; i++) {
+      frames.push(PIXI.Texture.fromFrame(`hamster0${i}.png`));
+    }
+
+    this.sprite = new extras.AnimatedSprite(frames);
+    this.sprite.scale.set(0.35);
+    this.sprite.animationSpeed = 0.3;
+
+    // initialize variables
+    this.basePos = constants.GROUND_LEVEL - this.sprite.height + constants.PLAYER_SHIFT;
+    this.sprite.y = this.basePos;
     this.isJumping = false;
-    this.jumpcounter = 0;
-
-    // center the sprite's anchor point
+    this.yspeed = 0;
     this.sprite.x = 0;
-    this.sprite.y = constants.GROUND_LEVEL - constants.PLAYER_HEIGHT;
+
+    // TODO: create hitbox
+  }
+
+  startRunning() {
+    this.sprite.play();
+  }
+
+  die() {
+    this.sprite.gotoAndStop(0);
   }
 
   tick(ticks) {
-    this.getRectangle(constants.PLAYER_HEIGHT, constants.PLAYER_WIDTH, ticks % 6, 6, this.texture);
-    if (this.sprite.y < constants.GROUND_LEVEL - constants.PLAYER_HEIGHT && !this.isJumping) {
-      this.sprite.y += 2;
-    }
     if (this.isJumping) {
-      this.jumpcounter += 1;
-      this.sprite.y -=2;
-    }
-    if (this.jumpcounter > constants.JUMP_MAX) {
-      this.isJumping = false;
-      this.jumpcounter = 0;
+      this.sprite.y += this.yspeed;
+      this.yspeed += constants.GRAVITY;
+
+      if (this.sprite.y >= this.basePos) {
+        this.isJumping = false;
+        this.sprite.y = this.basePos;
+      }
     }
   }
 
   jump() {
-    if (this.sprite.y == constants.GROUND_LEVEL - constants.PLAYER_HEIGHT && !this.isJumping) {
+    if (!this.isJumping) {
       this.isJumping = true;
+      this.yspeed = constants.JUMP_SPEED;
     }
-  }
-
-  // update the player animation (?)
-  getRectangle(height, length, frame, maxframes, texture) {
-    let framelength = length / maxframes;
-    let rectangle = new Rectangle(framelength * frame, 0, framelength, height);
-    texture.frame = rectangle;
   }
 }
