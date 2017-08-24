@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 
-var socket = io();
+var socket = io("//localhost:8000"); // this should work for now
 var authentication = "hamsterjumpAuthentication";
 
 function saveAuthentication(uniqueId) {
